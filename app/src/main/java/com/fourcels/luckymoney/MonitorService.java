@@ -91,7 +91,10 @@ public class MonitorService extends AccessibilityService {
             return;
         }
         List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByText("Open");
-        list.addAll(nodeInfo.findAccessibilityNodeInfosByText("拆红包"));
+
+        if(list.size() == 0) {
+            list = nodeInfo.findAccessibilityNodeInfosByText("拆红包");
+        }
 
         for(AccessibilityNodeInfo n : list) {
             n.performAction(AccessibilityNodeInfo.ACTION_CLICK);
