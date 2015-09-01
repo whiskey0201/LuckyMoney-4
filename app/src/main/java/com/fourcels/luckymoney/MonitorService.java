@@ -38,14 +38,13 @@ public class MonitorService extends AccessibilityService {
 
         }
 
-        if(mLuckyMoneyOpened) {
-            System.out.println("there is no new lucky money.");
-            return;
-        }
-
         if (eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
             System.out.println("TYPE_WINDOW_CONTENT_CHANGED");
-            lingHongbao();
+
+            if(!mLuckyMoneyOpened) {
+                lingHongbao();
+            }
+
         }
 
 
