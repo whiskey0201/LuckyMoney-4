@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Intent sSettingsIntent =
-            new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-
+    TextView mServiceStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +28,25 @@ public class MainActivity extends AppCompatActivity {
         btnAccessibility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(sSettingsIntent);
+                Intent settingsIntent =
+                        new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                startActivity(settingsIntent);
             }
         });
 
+        mServiceStatus = (TextView) findViewById(R.id.service_status_tv);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isAccessibleEnabled()) {
+            mServiceStatus.setText(R.string.service_status_on);
+        } else{
+            mServiceStatus.setText(R.string.service_status_off);
+        }
     }
 
     @Override
@@ -69,4 +83,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
